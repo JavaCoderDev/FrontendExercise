@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+
+<head>
+	<title>
+		Exercise 1
+	</title>
+	
+	<style>
+		h1{
+			color:black;
+		}
+		h2{
+			color:red;
+		}
+		h3
+		{
+			color:black;
+		}
+	</style>
+	
+</head>
+
+<body>
+	
+	
+	<div style="float:left;width:500px;border-right:4px solid black;border-left:2px solid black">
+		
+	<img src="img.png" alt="Semantics" style="width:500px;height:260px">
+	
+	<p style="margin-left:30px;font-size:14.5px;width: 400px;height:300px; border-bottom: 1px solid black" align="justify" align="center">
+		HTML DOESN'T PROVIDE A HUGE NUMBER OF ELEMENTS for
+us to work with. The selection available is more like that of a
+corner store than a Walmart.
+<br>
+<br>
+We have paragraphs, lists, and headlines but we don't have 
+events, news stories, or recipes. HTML gives us an element
+for marking up a string as an abbreviation, but it doesn't give
+us an element for marking up a number as a price.
+<br>
+<br>
+Clearly, this limitation hasn't been a show-stopper; just look
+at the amazing variety of websites out there. Even though
+HTML might not provide a specific element for marking up a
+particular piece of content, it provides just enough flexibility
+to be "good enough."
+	</p>
+	</div>
+	
+	<div style="float:left;margin-left:40px;width: 600px;border-right: 3px solid black;border-top: 1px solid black" align="justify">
+	<div style="float:left;margin-left:40px;font-size:14.5px;width: 400px">
+	<h2 style="margin-left: 20px">
+		EXTENSIBILITY
+	</h2>
+	
+	<p>
+		Other markup languages allow you to invent any element
+		you want. In XML, if you want an <code style="color:#66FFFF">event</code> element or a <code style="color:#66FFFF">price</code>
+		element, you just go right ahead and create it. The downside
+		 to this freedom is that you then have to teach a parser what
+<code style="color:#66FFFF">event</code> or <code style="color:#66FFFF">price</code> means. 
+The advantage to HTML's limited set
+ of elements is that every user agent knows about every element. Browsers have a built-in knowledge of HTML. That
+ wouldn't be possible if we were allowed to make up element
+  names.
+<br>
+<br>
+HTML provides a handy escape clause that allows web designers to add more semantic value to elements: the <code style="color:#66FFFF">class</code>
+attribute. This attribute allows us to label specific instances
+of an element as being a special class or type of that element.
+The fact that browsers don't understand the vocabulary we
+use in our <code style="color:#66FFFF">class</code> attributes doesn't affect the rendering of our
+documents.
+<br>
+<br>
+If, at this point, you're thinking "Wait a minute; aren't classes
+for CSS?" then you're half right. The CSS class selector is one
+example of a technology that makes use of the <code style="color:#66FFFF">class</code> attribute
+but it isn't the onlyreason for using classes. Classes can also be
+used in DOM Scripting. They can even be used by browsers
+if the class names follow an agreed convention, as is the case
+with microformats.
+	</p>
+	<h3 style="margin-left: 20px">
+		
+		Microformats
+	</h3>
+	<p>
+		
+		Microformats are a set ofconventions which are agreed upon
+by a community. These formats use the <code style="color:#66FFFF">class</code> attribute to plug
+some of the more glaring holes in HTML: hCard for contact
+details, hCalendar for events, hAtom for news stories. Because
+there is a community consensus on what class names to use,
+there are now parsers and browser extensions that work with
+those specific patterns.
+	</p>
+	</div>
+	 </div>
+</body>

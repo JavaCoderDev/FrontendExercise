@@ -1,0 +1,7 @@
+div#center
+	{
+		margin: 0 auto;
+		width: 960px;
+		height: 600px;
+		background-color:black;
+	}
