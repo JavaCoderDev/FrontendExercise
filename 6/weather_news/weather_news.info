@@ -1,0 +1,5 @@
+name = Weather news
+description = Provides a block with recent Weather news.
+ 
+core = 7.x
+package = Custom

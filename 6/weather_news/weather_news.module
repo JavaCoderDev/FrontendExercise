@@ -1,0 +1,138 @@
+<?php
+
+function weather_news_block_info() {
+    $blocks['weather_news'] = array(
+      'info' => t('Weather News'),
+      'cache' => DRUPAL_CACHE_PER_ROLE,
+    );
+ 
+    return $blocks;
+  }
+  
+    /**
+   * Implements hook_help().
+   *
+   * You can add documentation and help here (in admin/help#football_news). This
+   * documentation can help the users use and extend you module.
+   *
+   * @url: https://api.drupal.org/api/drupal/modules!help!help.api.php/function/hook_help/7
+   */
+  function weather_news_help($path, $arg) {
+    switch ($path) {
+      case 'admin/setting/weather_news':
+        return t('This module displays a block which shows a list recent Weather news.');
+ 
+      case 'admin/help#weather_news';
+        $output = '<h2>' . t('About') . '</h2>';
+        $output .= '<p>' . t('Displays recent sport news from weather-news.') . '</p>';
+        return $output;
+    }
+  }
+  
+   /**
+   * Implements hook_block_view().
+   *
+   * Creates content for our block. It sets the title for the block, and the 
+   * content.
+   *
+   * @url: https://api.drupal.org/api/drupal/modules!block!block.api.php/function/hook_block_view/7
+   */
+  function weather_news_block_view($delta = '') {
+    $block = array();
+	  $attributes = array(
+          'id' => 'weather-news',
+        );
+      // Set block title.
+      $block['subject'] = t('Weather News');
+ 
+      // Set block content.
+       // Get content from API.
+        $items = weather_news_content();
+ 
+        // Print list.
+        $block['content'] = theme('item_list', array(
+          'items' => $items,
+          'type' => 'ul',
+          'attributes' => array(
+            'id' => 'weather-news',
+          ),
+        ));
+ 
+    return $block;
+  }
+  /**
+   * Implements hook_form().
+   *
+   * Creates a configuration form. See the API reference for info on different
+   * form inputs.
+   *
+   * From API Reference: https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7
+   *
+   * @url: https://api.drupal.org/api/drupal/modules!node!node.api.php/function/hook_form/7
+   */
+   
+  function weather_news_form($form, &$form_state) {
+    // Fieldset.
+    $form['weather_api'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Weather API'),
+      '#weight' => 0,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+    
+    return system_settings_form($form);
+  }
+  
+  /**
+   * Custom API content callback.
+   *
+   * This callback is a custom callback to get Football news data.
+   * Here we request the data, preprocesses it and creates a list of news. The 
+   * array '$items' contains all the news, we'll display it as a unordered list
+   * later on.
+   *
+   * drupal_http_request: https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_http_request/7
+   * drupal_json_decode: https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_json_decode/7
+   */
+   
+  function weather_news_content() {
+	/*API path public 
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$country=drupal_http_request('http://freegeoip.net/json/'.$ip);
+	$result = drupal_json_decode($country->data);
+	$city = $result['city'];
+	
+	$api_url='http://5DayWeather.org/api.php?city='.$city;
+	*/
+    // API path localhost.
+	$api_url='http://5DayWeather.org/api.php?city=Odense';
+	$options = array(
+      'method' => 'GET',
+      'timeout' => 5,
+      'headers' => array(
+        'Content-Type' => 'application/json; charset=utf-8',
+      ),
+    );
+    // Request data.
+   // $request = drupal_http_request($query);
+    $request = drupal_http_request($api_url);
+  
+    // Convert data into associative array.
+    $result = drupal_json_decode($request->data);
+    $city = $result['data']['location'];
+    $city_temp = $result['data']['temperature'];
+	$city_temp = round(($city_temp-32)*(5/9));
+    $city_humidity = $result['data']['humidity'];
+    $city_sky = $result['data']['skytext'];
+      // Process data.
+      // Create li item with content.
+      $items[] = array(
+          'data' => '<h3 class="headline">In ' . $city. '</h3>' .
+          '<span class="datetime">Temperature= ' . $city_temp . ' C°</span>' .
+          '<div class="teaser"><p>Humidity= ' . $city_humidity . ' %</p></div>' .
+          '<div class="description"><p>Sky: '.$city_sky. '</p></div>',
+      );
+    return $items;
+  }
+  ?>
